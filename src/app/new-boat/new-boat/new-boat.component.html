@@ -1,0 +1,80 @@
+<div class="container-fluid">
+  <div class="row header-row bg-image">
+    <div class="col text-left">
+      <h1>New Boat</h1>
+    </div>
+    <div class="col text-right">
+      <button class="btn btn-info" style="margin-right: 10px;"
+      routerLink='../view'>View Boats</button>
+      <button class="btn btn-info"
+      routerLink=''>Home</button>
+    </div>
+  </div>
+  <div class="card-body" style="width: 1000px; margin:auto;">
+      <form [formGroup]="newBoatForm" (ngSubmit)="onSubmit()">
+          <div class="form-row">
+              <div class="form-row">
+              <div class="form-group col-10">
+                  <label>Name</label>
+                  <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                  <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                      <div *ngIf="f.name.errors.required">Boat Name is required</div>
+                  </div>
+              </div>
+              <div class="form-group col-10">
+                  <label>Year</label>
+                  <input type="text" formControlName="year" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.year.errors }" />
+                  <div *ngIf="submitted && f.year.errors" class="invalid-feedback">
+                      <div *ngIf="f.year.errors.required">Year is required</div>
+                      <div *ngIf="f.year.errors.pattern">Year must be numeric</div>
+                  </div>
+              </div>
+            </div>
+              <div class="form-row">
+                <div class="form-group col-10">
+                  <label>Shipyard Name</label>
+                  <input type="text" formControlName="shipyardName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.shipyardName.errors }" />
+                  <div *ngIf="submitted && f.shipyardName.errors" class="invalid-feedback">
+                      <div *ngIf="f.shipyardName.errors.required">Shipyard Name is required</div>
+                  </div>
+                </div>
+                <div class="form-group col-10">
+                  <label>Shipyard Country</label>
+                  <input type="text" formControlName="country" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.shipyardCountry.errors }" />
+                  <div *ngIf="submitted && f.shipyardCountry.errors" class="invalid-feedback">
+                      <div *ngIf="f.shipyardCountry.errors.required">Shipyard Country is required</div>
+                  </div>
+                </div>
+                <div class="form-group col-10">
+                  <label>Model</label>
+                  <input type="text" formControlName="model" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.model.errors }" />
+                  <div *ngIf="submitted && f.model.errors" class="invalid-feedback">
+                      <div *ngIf="f.model.errors.required">Model is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-10">
+                  <label>Boat Size</label>
+                  <input type="text" formControlName="size" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.size.errors }" />
+                  <div *ngIf="submitted && f.size.errors" class="invalid-feedback">
+                      <div *ngIf="f.size.errors.required">Size is required</div>
+                      <div *ngIf="f.size.errors.pattern">Boat size must be numeric</div>
+                  </div>
+                </div>
+                <div class="form-group col-10">
+                  <label>Boat Type</label>
+                  <input type="text" formControlName="type" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.type.errors }" />
+                  <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
+                      <div *ngIf="f.type.errors.required">Boat type is required</div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="text-center">
+              <button class="btn btn-primary btn-success mr-1">Create</button>
+              <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+          </div>
+      </form>
+  </div>
+</div>

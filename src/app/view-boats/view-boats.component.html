@@ -1,0 +1,59 @@
+<div class="container-fluid">
+  <div class="row header-row bg-image">
+    <div class="col text-left">
+      <h1>Boats</h1>
+    </div>
+    <div class="col text-right">
+      <button class="btn btn-success" style="margin-right: 10px;" (click)="redirectToNew()">New Boat</button>
+      <button class="btn btn-info"
+      routerLink=''>Home</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col pt-3">
+      <kendo-grid [data]="gridView"
+                  [sortable] ="{
+                  allowUnsort: true,
+                  mode: multiple ? 'multiple' : 'single'}"
+                  [sort]="sort"
+                  (sortChange)="sortChange($event)">
+
+        <kendo-grid-column field="name"
+                           title="Boat Name" (click)="columns[0].title">
+        </kendo-grid-column>
+
+        <kendo-grid-column-group title="Build by">
+          <kendo-grid-column field="shipyard.name"
+                             title="Shipyard">
+          </kendo-grid-column>
+          <kendo-grid-column field="shipyard.country"
+                             title="Country">
+          </kendo-grid-column>
+        </kendo-grid-column-group>
+
+
+        <kendo-grid-column-group title="Boat Model">
+          <kendo-grid-column field="model.model"
+                             title="Model">
+          </kendo-grid-column>
+          <kendo-grid-column field="model.year"
+                             title="Year">
+          </kendo-grid-column>
+        </kendo-grid-column-group>
+
+        <kendo-grid-column field="size"
+                           title="Size (ft)">
+        </kendo-grid-column>
+
+        <kendo-grid-column field="type"
+                           title="Type">
+          <ng-template kendoGridCellTemplate
+                       let-dataItem>
+            {{BoatType[dataItem.type]}}
+          </ng-template>
+        </kendo-grid-column>
+
+      </kendo-grid>
+    </div>
+  </div>
+</div>
