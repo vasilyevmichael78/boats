@@ -9,10 +9,10 @@ import {Subscription} from 'rxjs';
   templateUrl: './new-boat.component.html',
   styleUrls: ['./new-boat.component.css']
 })
-export class NewBoatComponent implements OnInit, OnDestroy {
+export class NewBoatComponent implements OnInit {
   newBoatForm: FormGroup;
   submitted = false;
-  subscriptionAdd: Subscription;
+
   constructor(private formBuilder: FormBuilder,
               private boatsService: BoatsService,
               private router : Router) { }
@@ -45,10 +45,10 @@ export class NewBoatComponent implements OnInit, OnDestroy {
         return;
     }
 
-    // @todo: call boats api to add the newly created boat.
+
     // after a successfull call, redirect to view boats component.
     if (this.newBoatForm.valid){
-  this.subscriptionAdd =  this.boatsService.addBoat(this.newBoatForm.value).subscribe(response => {
+   this.boatsService.addBoat(this.newBoatForm.value).subscribe(response => {
       console.log(response.status);
       if(response.status === 201) {
   this.router.navigateByUrl('/view');
@@ -63,7 +63,5 @@ export class NewBoatComponent implements OnInit, OnDestroy {
 
 }
 
-  ngOnDestroy(): void {
-    this.subscriptionAdd.unsubscribe();
-  }
+
 }
