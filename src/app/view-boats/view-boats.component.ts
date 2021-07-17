@@ -3,8 +3,6 @@ import { Boat, BoatGridColumn, BoatType } from '@app/_models';
 import { BoatsService } from '@app/_services/boats.service';
 import {orderBy, SortDescriptor} from '@progress/kendo-data-query';
 import {GridDataResult} from '@progress/kendo-angular-grid';
-import {map} from 'rxjs/operators';
-import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
 
 @Component({
@@ -12,7 +10,6 @@ import {Router} from '@angular/router';
   templateUrl: './view-boats.component.html'
 })
 export class ViewBoatsComponent implements OnInit {
-boats$: Observable<Boat[]>;
   boats: Boat[] = [];
   public multiple = false;
   public allowUnsort = true;
@@ -29,14 +26,13 @@ boats$: Observable<Boat[]>;
     { field: 'model.model', title: 'Model' },
   ];
 
-  constructor(private boatsService: BoatsService, private router:Router) {
+  constructor(private boatsService: BoatsService, private router: Router) {
 
   }
 
   ngOnInit() {
 
-this.boats$ = this.boatsService.getAll()
-    // this.loadProducts();
+    this.fetchData();
   }
   public sortChange(sort: SortDescriptor[]): void {
     this.sort = sort;
@@ -47,7 +43,8 @@ this.boats$ = this.boatsService.getAll()
       res => {
 
         this.boats = [...res];
-        // console.table(this.boats);
+        console.table(this.boats);
+        this.loadProducts();
       }
     );
   }
@@ -55,7 +52,7 @@ this.boats$ = this.boatsService.getAll()
     this.router.navigateByUrl('/new');
   }
    loadProducts(): void {
-    this.fetchData();
+
     this.gridView = {
       data: orderBy(this.boats, this.sort),
       total: this.boats.length

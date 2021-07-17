@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {BoatsService} from '@app/_services';
 import {Router} from '@angular/router';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'boats-new-boat',
   templateUrl: './new-boat.component.html',
   styleUrls: ['./new-boat.component.css']
 })
-export class NewBoatComponent implements OnInit {
+export class NewBoatComponent implements OnInit, OnDestroy {
   newBoatForm: FormGroup;
   submitted = false;
-
+  subscriptionAdd: Subscription;
   constructor(private formBuilder: FormBuilder,
               private boatsService: BoatsService,
               private router : Router) { }
@@ -22,7 +23,7 @@ export class NewBoatComponent implements OnInit {
       shipyardName: ['', Validators.required],
       country: ['', Validators.required],
       model: ['', [Validators.required]],
-      year: ['', Validators.required],
+      year: ['', Validators.required,],
       size: ['', [Validators.required, Validators.pattern('[0-9]+')] ],
       type: ['', Validators.required]
     });
@@ -46,10 +47,10 @@ export class NewBoatComponent implements OnInit {
 
     // @todo: call boats api to add the newly created boat.
     // after a successfull call, redirect to view boats component.
-
-    this.boatsService.addBoat(this.newBoatForm.value).subscribe(response => {
-        console.log(response);
-        if(response){
+    if (this.newBoatForm.valid){
+  this.subscriptionAdd =  this.boatsService.addBoat(this.newBoatForm.value).subscribe(response => {
+      console.log(response.status);
+      if(response.status === 201) {
   this.router.navigateByUrl('/view');
 }
 
@@ -58,5 +59,11 @@ export class NewBoatComponent implements OnInit {
         console.log(error);
       });
 
+  }
+
+}
+
+  ngOnDestroy(): void {
+    this.subscriptionAdd.unsubscribe();
   }
 }

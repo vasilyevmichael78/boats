@@ -12,13 +12,13 @@ export class BoatsService {
   constructor(private httpClient: HttpClient) { }
 
   getAll(): Observable<Boat[]> {
-    // @todo: call boats api to get all boats.
+
     return this.httpClient.get<Boat[]>(`${environment.apiUrl}/boats`);
   }
 
   addBoat(boat: any): Observable<any> {
-    // @todo: call boats api to add a new boat.
-    return this.httpClient.post(`${environment.apiUrl}/boats`, boat);
+
+    return this.httpClient.post(`${environment.apiUrl}/boats`, boat, {observe: 'response'});
   }
 
 }
